@@ -1,0 +1,67 @@
+name: Build Android
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # Permite executar manualmente
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest  # Usa máquina Linux gratuita
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.19.0'
+        channel: 'stable'
+    
+    - name: Install dependencies
+      run: flutter pub get
+    
+    - name: Analyze code
+      run: flutter analyze
+    
+    - name: Run tests
+      run: flutter test
+    
+    - name: Build APK
+      run: flutter build apk --release
+    
+    - name: Build App Bundle (AAB)
+      run: flutter build appbundle --release
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: android-apk-release
+        path: build/app/outputs/flutter-apk/app-release.apk
+        retention-days: 30
+    
+    - name: Upload AAB
+      uses: actions/upload-artifact@v3
+      with:
+        name: android-aab-release
+        path: build/app/outputs/bundle/release/app-release.aab
+        retention-days: 30
+    
+    - name: Build Info
+      run: |
+        echo "✅ Build Android concluído com sucesso!"
+        echo "📱 APK: build/app/outputs/flutter-apk/app-release.apk"
+        echo "📦 AAB: build/app/outputs/bundle/release/app-release.aab"
+        echo ""
+        echo "💡 Como usar:"
+        echo "   APK - Instale diretamente no Android"
+        echo "   AAB - Para publicar na Google Play Store"
