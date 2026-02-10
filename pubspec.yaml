@@ -17,6 +17,9 @@ dependencies:
   # Supabase
   supabase_flutter: ^2.0.0
   
+  # Fix para app_links - forçar versão estável
+  app_links: 6.3.2
+  
   # State Management
   provider: ^6.1.1
   
