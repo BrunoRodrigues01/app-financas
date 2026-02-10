@@ -77,7 +77,7 @@ jobs:
           --team-id "$APPLE_TEAM_ID"
     
     - name: Upload IPA Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ios-testflight-release
         path: ios/build/Runner.ipa
