@@ -73,14 +73,13 @@ class GoalService {
       var query = _supabase
           .from(_tableName)
           .select()
-          .eq('usuario_id', userId)
-          .order('data_conclusao', ascending: true);
+          .eq('usuario_id', userId);
 
       if (status != null) {
         query = query.eq('status', status);
       }
 
-      final response = await query;
+      final response = await query.order('data_conclusao', ascending: true);
       return List<Map<String, dynamic>>.from(response);
     } catch (e) {
       throw Exception('Erro ao buscar metas: ${e.toString()}');

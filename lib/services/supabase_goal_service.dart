@@ -104,12 +104,12 @@ class SupabaseGoalService {
           .single();
 
       final goal = Goal.fromJson(currentGoal);
-      goal.currentAmount += amount;
+      final newAmount = goal.currentAmount + amount;
 
       // Atualizar a meta
       final response = await _supabase
           .from(_tableName)
-          .update({'current_amount': goal.currentAmount})
+          .update({'current_amount': newAmount})
           .eq('id', goalId)
           .eq('user_id', userId)
           .select()
