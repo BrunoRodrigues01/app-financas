@@ -91,7 +91,7 @@ flutter run
 
 ## 👨‍💻 Desenvolvedor
 
-Bruno - Hygicare
+Bruno Rodrigues
 
 ## 📄 Licença
 
